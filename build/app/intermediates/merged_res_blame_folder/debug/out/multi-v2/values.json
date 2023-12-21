@@ -42,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "/Users/simoncheek/Desktop/Cat_App/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/simoncheek/Desktop/Flutter Dev/CatApp/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

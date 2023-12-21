@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/catcard.dart';
+import 'catcard.dart';
+import 'rankedCats.dart';
 // ignore_for_file: prefer_const_constructors
 
 void main() {
@@ -11,7 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyHomePage(), title: 'Cat Ranking App');
+    return MaterialApp(
+      home: MyHomePage(),
+      routes: <String, WidgetBuilder>{
+        '/RankedCatsPage': (context) => RankedCatsPage(
+              rankedCats: [],
+            ),
+      },
+      title: 'Cat Ranking App',
+    );
   }
 }
 
@@ -34,42 +43,52 @@ class _MyHomePageState extends State<MyHomePage> {
     CatCard(link: "Assets/cats8.jpeg", desc: "So cute"),
   ];
 
+  List<CatCard> rankedCats = [];
+
   Widget createCard(cat) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      width: 150.0,
-      height: 200.0,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Colors.black,
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          cats.remove(cat);
+          rankedCats.add(cat);
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        width: 150.0,
+        height: 200.0,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: Colors.black,
+            ),
           ),
-        ),
-        color: Colors.blue[200],
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                height: 100.0,
-                width: 100.0,
-                child: Image(
-                  image: AssetImage(cat.link),
-                  fit: BoxFit.cover,
+          color: Colors.blue[200],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 100.0,
+                  width: 100.0,
+                  child: Image(
+                    image: AssetImage(cat.link),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                cat.desc,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 10.0,
                 ),
-              ),
-            ],
+                Text(
+                  cat.desc,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -79,6 +98,59 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Container(
+        width: 250.0,
+        child: Drawer(
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 10.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.home),
+                    iconColor: Colors.blue,
+                    title: Text("Cats"),
+                    tileColor: Colors.cyan[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        bottomRight: Radius.circular(16.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/RankedCatsPage',
+                        arguments: rankedCats);
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.star),
+                    iconColor: Colors.blue,
+                    title: Text("Rankings"),
+                    tileColor: Colors.cyan[100],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        bottomRight: Radius.circular(16.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(
