@@ -130,8 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(4.0),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/RankedCatsPage',
-                        arguments: rankedCats);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              RankedCatsPage(rankedCats: rankedCats),
+                        ));
                   },
                   child: ListTile(
                     leading: Icon(Icons.star),
